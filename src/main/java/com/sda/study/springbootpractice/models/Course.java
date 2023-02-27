@@ -1,9 +1,11 @@
 package com.sda.study.springbootpractice.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -12,9 +14,13 @@ import java.time.LocalDate;
  * @author Vinod John
  * @Date 22.02.2023
  */
+
 @Entity
 @Data
-public class Course {
+@EqualsAndHashCode(callSuper = true)
+public class Course extends Auditable<String> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
