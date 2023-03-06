@@ -23,7 +23,8 @@
             <div class="alert alert-info" role="alert" th:if="${schools.size() == 0}">
                 No schools found!
             </div>
-
+            <a class="btn btn-success" href="/school/create" role="button">Add school</a>
+            <br/> <br/>
             <table class="table table-dark" th:if="${schools.size() > 0}">
                 <thead>
                     <th scope="col">#</th>
