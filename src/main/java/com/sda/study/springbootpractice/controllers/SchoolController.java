@@ -73,6 +73,33 @@ public class SchoolController {
         }
     }
 
+    @GetMapping("/update/{id}")
+    public String showUpdateSchoolPage(@PathVariable Long id, RedirectAttributes redirectAttributes,
+                                       @RequestParam(value="school", required=false) School school,
+                                       Model model) {
+        if (school == null) {
+            try {
+                model.addAttribute("school", schoolService.findSchoolById(id));
+            } catch (SchoolNotFoundException e) {
+                return handleException(redirectAttributes, e);
+            }
+        }
+
+        return "school/update-school";
+    }
+
+    @PostMapping("/update")
+    public String updateSchool(School school, RedirectAttributes redirectAttributes) {
+        try {
+            schoolService.updateSchool(school);
+            redirectAttributes.addFlashAttribute("message", String.format("School(id=%d) has been updated successfully!", school.getId()));
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/school";
+        } catch (SchoolNotFoundException e) {
+            return handleException(redirectAttributes, e);
+        }
+    }
+
     @GetMapping("/restore/{id}")
     public String restoreSchool(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
